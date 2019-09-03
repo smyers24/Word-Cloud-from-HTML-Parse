@@ -1,5 +1,8 @@
 import urllib3
 from bs4 import BeautifulSoup
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+# stopwords = set(STOPWORDS)
 
 
 # Beautiful Soup implementation   -- ** Make sure ToS of website allow scraping**
@@ -7,7 +10,7 @@ from bs4 import BeautifulSoup
 # -------------------------
 http = urllib3.PoolManager()
 #### ENTER URL BELOW
-url = 'http://'
+url = 'https://'
 response = http.request('GET', url)
 soup = BeautifulSoup(response.data, features="html.parser")
 
@@ -19,3 +22,16 @@ for post in posts:
     link = post.find('a')['href']
     date = post.select('.blog-entry-date.clr')[0].get_text()
     print(title + link + date)
+
+# Create a list of word
+text = (
+    "Python Python Python Matplotlib Matplotlib Seaborn Network Plot Violin Chart Pandas Datascience Wordcloud Spider Radar Parrallel Alpha Color Brewer Density Scatter Barplot Barplot Boxplot Violinplot Treemap Stacked Area Chart Chart Visualization Dataviz Donut Pie Time-Series Wordcloud Wordcloud Sankey Bubble")
+
+# Create the wordcloud object
+WordCloud = WordCloud(width=480, height=480, margin=0).generate(text)
+
+# Display the generated image:
+plt.imshow(WordCloud, interpolation="bilinear")
+plt.axis("off")
+plt.margins(x=0, y=0)
+plt.show()
